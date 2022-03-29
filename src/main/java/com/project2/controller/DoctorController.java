@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project2.model.Doctor;
 import com.project2.service.DoctorService;
 
+
 @RestController
-@RequestMapping("doctor")
+@RequestMapping("doctors")
 @CrossOrigin(origins = "http://localhost:4200")
 public class DoctorController {
-	
+
 	@Autowired
 	DoctorService doctorService;
 
@@ -39,68 +40,98 @@ public class DoctorController {
 		}
 		return responseEntity;
 	}
-
-	@GetMapping("{doctorId}")
-	public ResponseEntity<Doctor> getDoctor(@PathVariable("doctorId") int doctorId){ // localhost:5050/Doctor/single		
-		ResponseEntity<Doctor> responseEntity = null;
-		Doctor doctor = new Doctor();
-		if (doctorService.doesDoctorExists(doctorId)) {
-			doctor = doctorService.getDoctor(doctorId);
-			responseEntity = new ResponseEntity<Doctor>(doctor, HttpStatus.OK);
-		} else {
-			responseEntity = new ResponseEntity<Doctor>(doctor, HttpStatus.NO_CONTENT);
-		}
-		return responseEntity;
-	}
-
-	
-	}
 	/*
-	 //ONLY NEEDED IF WE ADD A PLACE TO ADD/UPDATE/DELETE DOCTORS ON WEBSITE
+	 * 
+	 * @GetMapping("{doctorId}") public ResponseEntity<Doctor>
+	 * getDoctor(@PathVariable("doctorId") int doctorId) { //
+	 * localhost:5050/Doctor/single ResponseEntity<Doctor> responseEntity = null;
+	 * Doctor doctor = new Doctor(); if (doctorService.doesDoctorExists(doctorId)) {
+	 * doctor = doctorService.getDoctor(doctorId); responseEntity = new
+	 * ResponseEntity<Doctor>(doctor, HttpStatus.OK); } else { responseEntity = new
+	 * ResponseEntity<Doctor>(doctor, HttpStatus.NO_CONTENT); } return
+	 * responseEntity; }
+	 */
+	/*
+	 * s
+	 * 
+	 * @GetMapping("searchDoctorByLocationId/{location}") public
+	 * ResponseEntity<List<Doctor>> getDoctorByLocationId(@PathVariable("location")
+	 * String location) { // localhost:5050/Doctor/single List<Doctor> result =
+	 * doctorService.getDoctorByLocationId(location); ResponseEntity <List<Doctor>>
+	 * responseEntity = null; if (result.size()==0) { responseEntity = new
+	 * ResponseEntity<List<Doctor>>(result, HttpStatus.NO_CONTENT); } else {
+	 * responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.OK); }
+	 * return responseEntity; } /*
+	 * 
+	 * @GetMapping("searchDoctorBySLI/{specialty}/{location}/{insuranceExpected}")
+	 * public ResponseEntity<List<Doctor>> getDoctorBySLI(@PathVariable("specialty")
+	 * String specialty, @PathVariable ("location") String location, @PathVariable
+	 * ("insuranceExpected") String insuranceExpected) { List<Doctor> result =
+	 * doctorService.getDoctorBySLI(specialty, location, insuranceExpected);
+	 * ResponseEntity<List<Doctor>> responseEntity = null; if (result.size() == 0) {
+	 * responseEntity = new ResponseEntity<List<Doctor>>(result,
+	 * HttpStatus.NO_CONTENT); } else { responseEntity = new
+	 * ResponseEntity<List<Doctor>>(result, HttpStatus.OK); } return responseEntity;
+	 * }
+	 */
+
 	@PostMapping
-	public ResponseEntity<String> addDoctor(@RequestBody Doctor Doctor) { // localhost:5050/Doctor -POST
+	public ResponseEntity<String> addDoctor(@RequestBody Doctor doctor) { // localhost:5050/Doctor -POST
 
 		ResponseEntity<String> responseEntity = null;
 		String result = null;
-		if (DoctorService.doesDoctorExists(Doctor.getDoctorId())) {
-			result = "Doctor with Doctor id :" + Doctor.getDoctorId() + " already exists";
-			responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 200
+		if (doctorService.doesDoctorExists(doctor.getDoctorId())) {
+			result = "Doctor with Doctor id :" + doctor.getDoctorId() + " already exists";
+			responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 200 }
 		} else {
-			result = DoctorService.addDoctor(Doctor);
-			responseEntity = new ResponseEntity<String>(result, HttpStatus.CREATED);// 201
+			result = doctorService.addDoctor(doctor);
+			responseEntity = new ResponseEntity<String>(result, HttpStatus.CREATED);// 201 }
+
 		}
 		return responseEntity;
 	}
-		
-	@PutMapping("{DoctorId}")
-	public ResponseEntity<String> updateDoctor(@PathVariable("DoctorId") int DoctorId,
-			@RequestBody Doctor Doctor) { /// localhost:5050/Doctor -Put
-		ResponseEntity<String> responseEntity = null;
-		String result = null;
-		if (DoctorService.doesDoctorExists(Doctor.getDoctorId())) {
-			result = DoctorService.updateDoctor(DoctorId, Doctor);
-			responseEntity = new ResponseEntity<String>(result, HttpStatus.OK);
-		} else {
-			result = "Doctor with Doctor is :" + Doctor.getDoctorId() + "does not exists";
-			responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_MODIFIED);
-		}
-		return responseEntity;
-	}
+
 	
-	@DeleteMapping("{DoctorId}")
-	public ResponseEntity<String> deleteByDoctorId(@PathVariable("DoctorId")int doctorId) {
-		ResponseEntity<String> responseEntity = null;
-		String result = null;
-		if (DoctorService.doesDoctorExists(doctorId)) {
-			result = DoctorService.deleteDoctor(doctorId);
-			responseEntity = new ResponseEntity<String>(result,HttpStatus.OK);
-		} else {
-			result = "Doctor (id:"+doctorId+") does not exist";
-			responseEntity = new ResponseEntity<String>(result,HttpStatus.NO_CONTENT);
-		}
-		return responseEntity;
+@PutMapping("{doctorId}")
+public ResponseEntity<String> updateProduct(@PathVariable("doctorId") int doctorId,
+		@RequestBody Doctor doctor) { /// localhost:5050/product -Put
+	ResponseEntity<String> responseEntity = null;
+	String result = null;
+	if (doctorService.doesDoctorExists(doctor.getDoctorId())) {
+		result = doctorService.updateDoctor(doctorId, doctor);
+		responseEntity = new ResponseEntity<String>(result, HttpStatus.OK);
+	} else {
+		result = "Doctor with Id :" + doctor.getDoctorId() + "does not exists";
+		responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_MODIFIED);
 	}
-	*/
+	return responseEntity;
+}
+}
 
-
-
+/*
+ * //ONLY NEEDED IF WE ADD A PLACE TO ADD/UPDATE/DELETE DOCTORS ON WEBSITE
+ * 
+ * 
+ * 
+ * @PutMapping("{DoctorId}") public ResponseEntity<String>
+ * updateDoctor(@PathVariable("DoctorId") int DoctorId,
+ * 
+ * @RequestBody Doctor Doctor) { /// localhost:5050/Doctor -Put
+ * ResponseEntity<String> responseEntity = null; String result = null; if
+ * (DoctorService.doesDoctorExists(Doctor.getDoctorId())) { result =
+ * DoctorService.updateDoctor(DoctorId, Doctor); responseEntity = new
+ * ResponseEntity<String>(result, HttpStatus.OK); } else { result =
+ * "Doctor with Doctor is :" + Doctor.getDoctorId() + "does not exists";
+ * responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_MODIFIED);
+ * } return responseEntity; }
+ * 
+ * @DeleteMapping("{DoctorId}") public ResponseEntity<String>
+ * deleteByDoctorId(@PathVariable("DoctorId")int doctorId) {
+ * ResponseEntity<String> responseEntity = null; String result = null; if
+ * (DoctorService.doesDoctorExists(doctorId)) { result =
+ * DoctorService.deleteDoctor(doctorId); responseEntity = new
+ * ResponseEntity<String>(result,HttpStatus.OK); } else { result =
+ * "Doctor (id:"+doctorId+") does not exist"; responseEntity = new
+ * ResponseEntity<String>(result,HttpStatus.NO_CONTENT); } return
+ * responseEntity; }
+ */

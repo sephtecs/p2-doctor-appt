@@ -18,7 +18,8 @@ public class Doctor {
 	@Id
 	private int doctorId;
 	private String doctorName;
-	private String speciallty;
-	private String location;
+	private String specialty;
+	private String location_city;
+	private String location_state;
 	private String insuranceExcepted;
 }

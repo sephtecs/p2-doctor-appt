@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import com.project2.model.Doctor;
 import com.project2.repository.DoctorRepository;
 
-@Service  
+@Service
+
 public class DoctorServiceImpl implements DoctorService {
 
 	@Autowired
@@ -46,5 +47,31 @@ public class DoctorServiceImpl implements DoctorService {
 		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
 		return doctor.isPresent();
 	}
+
+	/*
+	@Override
+	public List<Doctor> getDoctorBySLI(String specialty, String location, String insuranceExpected) {
+		return doctorRepository.findByDoctorSLI(specialty, location,  insuranceExpected);
+	}
+	*/
+
+	@Override
+	public String addDoctor(Doctor doctor) {
+		doctorRepository.save(doctor);
+		return "Doctor Saved";
+	}
+/*
+	@Override
+	public List<Doctor> getDoctorByLocationId(String location){
+		// TODO Auto-generated method stub
+		return doctorRepository.findByLocationId(location);
+		*/
+
+	@Override
+	public String updateDoctor(int doctorId, Doctor doctor) {
+		doctorRepository.save(doctor);
+		return "Doctor Updated";
+	}
+	
 
 }
