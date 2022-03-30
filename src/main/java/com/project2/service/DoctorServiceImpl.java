@@ -10,12 +10,11 @@ import com.project2.model.Doctor;
 import com.project2.repository.DoctorRepository;
 
 @Service
-
 public class DoctorServiceImpl implements DoctorService {
 
-	@Autowired
+	@Autowired 
 	DoctorRepository doctorRepository;
-	
+	 	
 	@Override
 	public List<Doctor> getDoctors() {
 		return (List<Doctor>)doctorRepository.findAll();
@@ -34,19 +33,6 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	////NEEDS WORK ON THIS METHOD STILL NEED TO FIGURE OUT OF A VAILDATION FOR LOACATION/DOCTOR
-	@Override
-	public boolean docLiveLocaiton(String location, int doctorId) {
-		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
-		return doctor.isPresent();
-	
-	}
-
-	////NEEDS WORK ON THIS METHOD STILL NEED TO FIGURE OUT OF A VAILDATION FOR INSURANCE/DOCTOR
-	@Override
-	public boolean isInsuranceExcepted(String insuranceExcepted, int doctorId) {
-		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
-		return doctor.isPresent();
-	}
 
 	/*
 	@Override
@@ -61,6 +47,19 @@ public class DoctorServiceImpl implements DoctorService {
 		return "Doctor Saved";
 	}
 /*
+ * 	@Override
+	public boolean docLiveLocaiton(String location, int doctorId) {
+		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+		return doctor.isPresent();
+	
+	}
+
+	////NEEDS WORK ON THIS METHOD STILL NEED TO FIGURE OUT OF A VAILDATION FOR INSURANCE/DOCTOR
+	@Override
+	public boolean isInsuranceExcepted(String insuranceExcepted, int doctorId) {
+		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+		return doctor.isPresent();
+	
 	@Override
 	public List<Doctor> getDoctorByLocationId(String location){
 		// TODO Auto-generated method stub
@@ -72,6 +71,11 @@ public class DoctorServiceImpl implements DoctorService {
 		doctorRepository.save(doctor);
 		return "Doctor Updated";
 	}
+	@Override
+	public List<Doctor> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted) {
+		return doctorRepository.findBySpecialtyLocation_CityLocation_StateInsurance_Excepted(specialty, location_city, location_state, insurance_Excepted);
+	}
+	
 	
 
 }

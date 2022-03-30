@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table (name = "doctors")
+
 public class Doctor {
 	
 	@Id
@@ -21,5 +22,5 @@ public class Doctor {
 	private String specialty;
 	private String location_city;
 	private String location_state;
-	private String insuranceExcepted;
+	private String insurance_Excepted;
 }

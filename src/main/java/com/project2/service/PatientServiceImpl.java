@@ -10,7 +10,7 @@ import com.project2.model.Patient;
 import com.project2.repository.PatientsRepository;
 
 @Service 
-public class PatintServiceImpl implements PatientService {
+public class PatientServiceImpl implements PatientService {
 	@Autowired
 	PatientsRepository patientsRepository;
 	

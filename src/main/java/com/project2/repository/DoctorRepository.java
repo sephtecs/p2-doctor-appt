@@ -15,13 +15,23 @@ import org.springframework.stereotype.Repository;
 import com.project2.model.Doctor;
 
 
+@Repository
 public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
 
+	
+	//List<Doctor> findByDoctorSLI(String specialty, String location, String insuranceExpected);
+	
+	List<Doctor>findBySpecialtyLocation_CityLocation_StateInsurance_Excepted(String specialty, String location_city, String location_state, String insurance_Excepted);
+	
+	@Query("FROM Doctors d WHERE d.specialty LIKE :spec AND d.location_city LIKE :loccity AND d.location_state LIKE :locstate AND d.insurance_Excepted LIKE :insexec ")
+	public Optional<List<Doctor>> findByMySpecialtyLocation_CityLocation_StateInsurance_ExceptedOptional(@Param("spec") 
+	String specialty, @Param("loccity") String location_city, @Param("locstate") String location_state, @Param("insexec") String insuranceExcepted );
+	
 	/*
 	List<Doctor>findByLocationId(String location);
 
 	
-	List<Doctor> findByDoctorSLI(String specialty, String location, String insuranceExpected);
+	
 	/*
 	
 	@Query("From Doctors d WHERE d.specialty LIKE :specialty and d.location LIKE :location and d.insuranceExpected LIKE :insuranceExpected")
@@ -34,3 +44,7 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
 	
 
 }
+
+
+//SELECT * FROM Doctors d WHERE d.specialty LIKE 'physician' AND d.location_city LIKE 'Dallas'
+//AND d.location_state LIKE 'Texas' AND d.insurance_Excepted = 'Allied'

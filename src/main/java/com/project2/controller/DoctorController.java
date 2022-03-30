@@ -3,6 +3,7 @@ package com.project2.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,13 +20,15 @@ import com.project2.model.Doctor;
 import com.project2.service.DoctorService;
 
 
+
 @RestController
 @RequestMapping("doctors")
 @CrossOrigin(origins = "http://localhost:4200")
 public class DoctorController {
 
-	@Autowired
+	@Autowired 
 	DoctorService doctorService;
+
 
 	@GetMapping
 	public ResponseEntity<List<Doctor>> getDoctors() { // LOCALHOST:5050/Doctor -GET
@@ -40,6 +43,20 @@ public class DoctorController {
 		}
 		return responseEntity;
 	}
+	
+	@GetMapping("/searchDoctorBySLI/{specialty}/{location_city}/{location_state}/{insurance_Excepted}")
+	public ResponseEntity<List<Doctor>> getDoctorNameBySLI(@PathVariable("specialty") String spec, @PathVariable("location_city") String loccity,@PathVariable("location_state") String locstate,@PathVariable("insurance_Excepted") String insexec ) { // localhost:5050/product/Bottle
+		List<Doctor> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+		ResponseEntity<List<Doctor>> responseEntity = null;
+		if (result.size() == 0) {
+			responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.NO_CONTENT);
+		} else {
+			responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.OK);
+		}
+		return responseEntity;
+	}
+	
+	
 	/*
 	 * 
 	 * @GetMapping("{doctorId}") public ResponseEntity<Doctor>
