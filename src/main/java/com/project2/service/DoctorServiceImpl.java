@@ -11,7 +11,7 @@ import com.project2.repository.DoctorRepository;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
-
+	
 	@Autowired 
 	DoctorRepository doctorRepository;
 	 	
@@ -72,10 +72,48 @@ public class DoctorServiceImpl implements DoctorService {
 		return "Doctor Updated";
 	}
 	@Override
-	public List<Doctor> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted) {
-		return doctorRepository.findBySpecialtyLocation_CityLocation_StateInsurance_Excepted(specialty, location_city, location_state, insurance_Excepted);
+    public Optional<List<Doctor>> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted) {
+        return doctorRepository.findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted(specialty, location_city, location_state, insurance_Excepted);
+        //return null;
+    }
+	/*
+	@Override
+	public List<Doctor> findBySpecialtyLocation_CityLocation_StateInsurance_Excepted(String specialty,
+			String location_city, String location_state, String insurance_Excepted) {
+		return null;
 	}
-	
+	*/
+
+	@Override
+	public boolean doesSpecialtyExist(String specialty) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean doesLocation_City(String location_city) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean doesLocation_state(String location_state) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean doesInsuranceExceptedExist(String insurance_Excepted) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Doctor> getDoctorByName(String doctorName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

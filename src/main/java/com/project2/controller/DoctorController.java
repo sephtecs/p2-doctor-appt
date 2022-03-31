@@ -1,6 +1,7 @@
 package com.project2.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,19 +44,32 @@ public class DoctorController {
 		}
 		return responseEntity;
 	}
-	
+	/*
 	@GetMapping("/searchDoctorBySLI/{specialty}/{location_city}/{location_state}/{insurance_Excepted}")
 	public ResponseEntity<List<Doctor>> getDoctorNameBySLI(@PathVariable("specialty") String spec, @PathVariable("location_city") String loccity,@PathVariable("location_state") String locstate,@PathVariable("insurance_Excepted") String insexec ) { // localhost:5050/product/Bottle
-		List<Doctor> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+		Optional<List<Doctor>> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
 		ResponseEntity<List<Doctor>> responseEntity = null;
 		if (result.size() == 0) {
 			responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.NO_CONTENT);
 		} else {
-			responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.OK);
+			responseEntity = new ResponseEntityOptional<List<Doctor>>(result, HttpStatus.OK);
 		}
 		return responseEntity;
 	}
-	
+	*/
+	@GetMapping("/searchDoctorBySLI/{specialty}/{location_city}/{location_state}/{insurance_Excepted}")
+    public ResponseEntity<List<Doctor>> getDoctorNameBySLI(@PathVariable("specialty") String spec, @PathVariable("location_city") String loccity,@PathVariable("location_state") String locstate,@PathVariable("insurance_Excepted") String insexec ) { // localhost:5050/product/Bottle
+        Optional<List<Doctor>> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+        ResponseEntity<List<Doctor>> responseEntity = null;
+        if (result.equals(null)) {
+            responseEntity = new ResponseEntity<List<Doctor>>( HttpStatus.NO_CONTENT);
+        } else {
+            result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+            System.out.println(result);
+            responseEntity = new ResponseEntity<List<Doctor>>(HttpStatus.OK);
+        }
+        return responseEntity;
+    }
 	
 	/*
 	 * 
@@ -120,6 +134,18 @@ public ResponseEntity<String> updateProduct(@PathVariable("doctorId") int doctor
 	} else {
 		result = "Doctor with Id :" + doctor.getDoctorId() + "does not exists";
 		responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_MODIFIED);
+	}
+	return responseEntity;
+}
+
+@GetMapping("searchDoctorByName/{doctorName}")
+public ResponseEntity<List<Doctor>> getDoctorByDoctorName(@PathVariable("doctorName") String doctorName) { // localhost:5050/product/Bottle
+	List<Doctor> result = doctorService.getDoctorByName(doctorName);
+	ResponseEntity<List<Doctor>> responseEntity = null;
+	if (result.size() == 0) {
+		responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.NO_CONTENT);
+	} else {
+		responseEntity = new ResponseEntity<List<Doctor>>(result, HttpStatus.OK);
 	}
 	return responseEntity;
 }
