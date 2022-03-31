@@ -1,10 +1,7 @@
 package com.project2.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.project2.model.Doctor;
 
@@ -25,7 +22,8 @@ public interface DoctorService {
 	//public List<Doctor> get (String location);
 	//public boolean docLiveLocaiton(String location, int doctorId);
 	//public boolean isInsuranceExcepted (String insuranceExcepted, int doctorId);
-	public Optional<List<Doctor>> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted);
+	public List<Doctor> getDoctorBySLI(String insurance_Excepted, String location_city, String location_state, String specialty);
+	//public List<Doctor> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted);
 	//List<Doctor>findBySpecialtyLocation_CityLocation_StateInsurance_Excepted(String specialty, String location_city, String location_state, String insurance_Excepted);
 	
 }  

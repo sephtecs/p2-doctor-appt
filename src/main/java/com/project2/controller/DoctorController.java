@@ -57,19 +57,33 @@ public class DoctorController {
 		return responseEntity;
 	}
 	*/
+	/*
 	@GetMapping("/searchDoctorBySLI/{specialty}/{location_city}/{location_state}/{insurance_Excepted}")
     public ResponseEntity<List<Doctor>> getDoctorNameBySLI(@PathVariable("specialty") String spec, @PathVariable("location_city") String loccity,@PathVariable("location_state") String locstate,@PathVariable("insurance_Excepted") String insexec ) { // localhost:5050/product/Bottle
-        Optional<List<Doctor>> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
-        ResponseEntity<List<Doctor>> responseEntity = null;
-        if (result.equals(null)) {
+        List<Doctor> result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+        ResponseEntity<List<Doctor>> responseEntity=null ;
+        if (result.size()==0) {
             responseEntity = new ResponseEntity<List<Doctor>>( HttpStatus.NO_CONTENT);
         } else {
-            result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
-            System.out.println(result);
+            //result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
             responseEntity = new ResponseEntity<List<Doctor>>(HttpStatus.OK);
         }
         return responseEntity;
     }
+	*/
+	
+	@GetMapping("/searchDoctorBySLI/{insurance_Excepted}/{location_city}/{location_state}/{specialty}")
+    public ResponseEntity<List<Doctor>> getDoctorNameBySLI(@PathVariable("insurance_Excepted") String insexec, @PathVariable("location_city") String loccity,@PathVariable("location_state") String locstate, @PathVariable("specialty") String spec ) { // localhost:5050/product/Bottle
+        List<Doctor> result = doctorService.getDoctorBySLI(insexec, loccity, locstate, spec);
+        ResponseEntity<List<Doctor>> responseEntity=null ;
+        if (result.size()==0) {
+            responseEntity = new ResponseEntity<List<Doctor>>( HttpStatus.NO_CONTENT);
+        } else {
+            //result = doctorService.getDoctorBySLI(spec, loccity, locstate, insexec);
+            responseEntity = new ResponseEntity<List<Doctor>>(HttpStatus.OK);
+        }
+        return responseEntity;
+	}
 	
 	/*
 	 * 

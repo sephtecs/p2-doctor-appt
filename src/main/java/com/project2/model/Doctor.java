@@ -19,8 +19,9 @@ public class Doctor {
 	@Id
 	private int doctorId;
 	private String doctorName;
-	private String specialty;
+	private String insurance_Excepted;
 	private String location_city;
 	private String location_state;
-	private String insurance_Excepted;
+	private String specialty;
+	
 }

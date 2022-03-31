@@ -28,7 +28,7 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer>{
 	
 	//List<Doctor> findByInsurance_Excepted(String insurance_Excepted);
 	
-	//List<Doctor> findByDoctorName(String doctorName);
+	List<Doctor> findByDoctorName(String doctorName);
 	
 	
 	//List<Doctor> findByDoctorSLI(String specialty, String location, String insuranceExpected);
@@ -38,8 +38,8 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer>{
 	
 	
 	@Query("FROM Doctor d WHERE d.specialty LIKE :spec AND d.location_city LIKE :loccity AND d.location_state LIKE :locstate AND d.insurance_Excepted LIKE :insexec ")
-    public Optional<List<Doctor>> findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted(@Param("spec") 
-    String specialty, @Param("loccity") String location_city, @Param("locstate") String location_state, @Param("insexec") String insuranceExcepted );
+    public List<Doctor> findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted(@Param("spec") 
+    String specialty, @Param("loccity") String location_city, @Param("locstate") String location_state, @Param("insexec") String insurance_Excepted );
 	
 	/*
 	List<Doctor>findByLocationId(String location);

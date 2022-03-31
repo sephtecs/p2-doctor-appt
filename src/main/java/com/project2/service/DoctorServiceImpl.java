@@ -71,9 +71,10 @@ public class DoctorServiceImpl implements DoctorService {
 		doctorRepository.save(doctor);
 		return "Doctor Updated";
 	}
+	
 	@Override
-    public Optional<List<Doctor>> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted) {
-        return doctorRepository.findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted(specialty, location_city, location_state, insurance_Excepted);
+    public List<Doctor> getDoctorBySLI( String insurance_Excepted, String location_city, String location_state, String specialty) {
+        return doctorRepository.findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted( insurance_Excepted, location_city, location_state, specialty);
         //return null;
     }
 	/*
@@ -82,6 +83,9 @@ public class DoctorServiceImpl implements DoctorService {
 			String location_city, String location_state, String insurance_Excepted) {
 		return null;
 	}
+	@Override
+    public List<Doctor> getDoctorBySLI(String specialty, String location_city, String location_state, String insurance_Excepted) {
+        return doctorRepository.findByMySpecialtyLocation_CityLocation_StateInsurance_Excepted(specialty, location_city, location_state, insurance_Excepted);
 	*/
 
 	@Override
@@ -111,7 +115,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public List<Doctor> getDoctorByName(String doctorName) {
 		// TODO Auto-generated method stub
-		return null;
+		return doctorRepository.findByDoctorName(doctorName);
 	}
 
 	
